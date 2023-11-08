@@ -4,6 +4,8 @@
 #   gem install pg
 # On macOS with Homebrew:
 #   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
+# On macOS with MacPorts:
+#   gem install pg -- --with-pg-config=/opt/local/lib/postgresql84/bin/pg_config
 # On Windows:
 #   gem install pg
 #       Choose the win32 build.
@@ -21,15 +23,14 @@ default: &default
 
 development:
   <<: *default
-  database: final_capstone_back_end_development
-
-  # The specified database role being used to connect to PostgreSQL.
-  # To create additional roles in PostgreSQL see `$ createuser --help`.
-  # When left blank, PostgreSQL will use the default role. This is
+ 
+  # The specified database role being used to connect to postgres.
+  # To create additional roles in postgres see `$ createuser --help`.
+  # When left blank, postgres will use the default role. This is
   # the same name as the operating system user running Rails.
-  #username: final_capstone_back_end
+  #username: budget
 
-  # The password associated with the PostgreSQL role (username).
+  # The password associated with the postgres role (username).
   #password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -54,9 +55,7 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: final_capstone_back_end_test
-
+ 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
@@ -79,6 +78,9 @@ test:
 #
 production:
   <<: *default
-  database: final_capstone_back_end_production
-  username: final_capstone_back_end
-  password: <%= ENV["FINAL_CAPSTONE_BACK_END_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
+  database: rent_production
+  username: postgres
+  password: postgres
+  host: localhost
+  port: 5432
